@@ -1,0 +1,20 @@
+{
+  "name": "relearning-backbone",
+  "version": "1.0.0",
+  "homepage": "https://github.com/bmajewski/relearning-backbone",
+  "authors": [
+    "Brian M <hireme@brianmajewski.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.16"
+  }
+}
