@@ -15,7 +15,18 @@ define(function (require) {
 
         routes: {
             '': 'home',
-            'home': 'home'
+            'home': 'home',
+            'users': 'users'
+        },
+
+        users: function() {
+            console.log('routing - users');
+            require(['users/collection', 'users/listView'], function(Collection, View) {
+                var collection = new Collection();
+                collection.fetch().done(function(){
+                    mediator.trigger('page:displayView', new View({collection: collection}));
+                });
+            });
         },
 
         home: function () {

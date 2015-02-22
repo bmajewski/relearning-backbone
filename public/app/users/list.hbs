@@ -1,0 +1,19 @@
+<div class="well">
+    <h4><b>Users</b></h4>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Name</th>
+    </thead>
+    <tbody>
+    {{#each users}}
+        <tr>
+            <td>{{_id}}</td>
+            <td>{{email}}</td>
+            <td>{{name}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

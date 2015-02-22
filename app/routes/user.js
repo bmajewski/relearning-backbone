@@ -49,7 +49,7 @@ module.exports = function (app, express) {
                 if (err) res.send(err);
 
                 if (req.body.name) user.name = req.body.name;
-                if (req.body.username) user.username = req.body.username;
+                if (req.body.email) user.email = req.body.email;
                 if (req.body.password) user.password = req.body.password;
 
                 user.save(function (err) {
