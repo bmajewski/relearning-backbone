@@ -23,7 +23,7 @@ module.exports = function (app, express) {
                         return res.send(err);
                     }
                 } else {
-                    res.json({message: 'user created'});
+                    res.json(user);
                 }
 
             });
@@ -54,14 +54,14 @@ module.exports = function (app, express) {
 
                 user.save(function (err) {
                     if (err)res.send(err);
-                    res.json({message: 'user updated'});
+                    res.json(user);
                 });
             });
         })
         .delete(function (req, res) {
             User.remove({_id: req.params.user_id}, function (err, user) {
                 if (err) res.send(err);
-                res.json({message: 'user deleted'});
+                res.json({});
             })
         });
 

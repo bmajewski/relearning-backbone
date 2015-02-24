@@ -9,7 +9,10 @@ requirejs.config({
         "text": "../components/requirejs-text/text",
         "hbs": "../components/require-handlebars-plugin/hbs",
         "datatables": "../components/datatables/media/js/jquery.dataTables",
-        "datatables-bootstrap3": "../components/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3"
+        "datatables-bootstrap3": "../components/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3",
+        "bootstrap-modal": "../components/bootstrap/js/modal",
+        "backbone.bootstrap-modal": "../components/backbone.bootstrap-modal/src/backbone.bootstrap-modal",
+        "stickit" : "../components/backbone.stickit/backbone.stickit"
     }
 });
 

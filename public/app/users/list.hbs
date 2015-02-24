@@ -1,11 +1,12 @@
 <div class="well">
-    <h4><b>Users</b></h4>
+    <h4><b>Users</b><span class="pull-right"><button class="btn btn-primary js-editUser">Add User</button></span></h4>
 </div>
 <table class="table table-bordered table-striped">
     <thead>
     <th>ID</th>
     <th>Email</th>
     <th>Name</th>
+    <th></th>
     </thead>
     <tbody>
     {{#each users}}
@@ -13,7 +14,14 @@
             <td>{{_id}}</td>
             <td>{{email}}</td>
             <td>{{name}}</td>
+            <td>
+                <div class="pull-right">
+                    <button data-id="{{_id}}" class="btn btn-danger btn-sm js-deleteUser">Delete</button>
+                    <button data-id="{{_id}}" class="btn btn-success btn-sm js-editUser">Edit</button>
+                </div>
+            </td>
         </tr>
     {{/each}}
     </tbody>
 </table>
+
