@@ -14,6 +14,7 @@ module.exports = function (app, express) {
             user.name = req.body.name;
             user.email = req.body.email;
             user.password = req.body.password;
+            user.permissions = req.query.permissions || [];
 
             user.save(function (err) {
                 if (err) {
@@ -51,10 +52,15 @@ module.exports = function (app, express) {
                 if (req.body.name) user.name = req.body.name;
                 if (req.body.email) user.email = req.body.email;
                 if (req.body.password) user.password = req.body.password;
+                user.permissions = req.query.permissions || [];
+
 
                 user.save(function (err) {
-                    if (err)res.send(err);
-                    res.json(user);
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        res.json(user);
+                    }
                 });
             });
         })
