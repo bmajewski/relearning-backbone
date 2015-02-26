@@ -1,11 +1,62 @@
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 var User = require('../models/user');
+
+var superSecret = 'TheAmazingKreskin';
 
 module.exports = function (app, express) {
     var userRouter = express.Router();
 
+    userRouter.post('/authenticate', function (req, res) {
+        User.findOne({
+            username: req.body.username
+        }).select('name username password').exec(function (err, user) {
+            if (err) throw err;
+
+            if (!user) {
+                res.json({success: false, message: 'User not found'});
+            } else {
+                var validPassword = user.comparePassword(req.body.password);
+                if (!validPassword) {
+                    res.json({success: false, message: 'Wrong password'});
+                } else {
+                    var token = jwt.sign({
+                        name: user.name,
+                        username: user.username,
+                        _id: user._id
+                    }, superSecret, {
+                        expiresInMinutes: 1440
+                    });
+
+                    res.json({
+                        success: true,
+                        message: 'login ok',
+                        token: token,
+                        _id: user._id
+                    });
+                }
+            }
+        });
+    });
+
     userRouter.get('/', function (req, res) {
         res.json({message: 'api is loaded'});
+    });
+
+    userRouter.use(function (req, res, next) {
+        var token = req.body.token || req.params.token || req.headers['x-access-token'];
+        if (token) {
+            jwt.verify(token, superSecret, function (err, decoded) {
+                if (err) {
+                    return res.status(401).send({success: false, message: 'Failed to authenticate token'});
+                } else {
+                    req.decoded = decoded;
+                    next();
+                }
+            })
+        } else {
+            return res.status(401).send({success: false, message: 'No token provided'});
+        }
     });
 
     userRouter.route('/users')
