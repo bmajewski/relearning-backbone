@@ -9,8 +9,8 @@ module.exports = function (app, express) {
 
     userRouter.post('/authenticate', function (req, res) {
         User.findOne({
-            username: req.body.username
-        }).select('name username password').exec(function (err, user) {
+            email: req.body.email
+        }).select('name email password').exec(function (err, user) {
             if (err) throw err;
 
             if (!user) {
@@ -22,7 +22,7 @@ module.exports = function (app, express) {
                 } else {
                     var token = jwt.sign({
                         name: user.name,
-                        username: user.username,
+                        email: user.email,
                         _id: user._id
                     }, superSecret, {
                         expiresInMinutes: 1440
