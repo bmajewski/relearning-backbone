@@ -5,10 +5,18 @@
                 <a href="/" class="navbar-brand"><b>relearning backbone</b></a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="#users"><span class="fa fa-users"></span> Users</a></li>
+                <li class="navbar-text">version: {{applicationInfo.version}}</li>
+                {{#if user._id}}
+                    <li><a href="#users"><span class="fa fa-users"></span> Users</a></li>
+                {{/if}}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#logout"><span class="fa fa-lg fa-times-circle-o"></span> Logout</a></li>
+                {{#if user._id}}
+                    <li class="navbar-text">Hello {{user.name}}</li>
+                    <li><a href="#logout">Logout <span class="fa fa-lg fa-sign-out"></span></a></li>
+                {{else}}
+                    <li><a href="#login">Login <span class="fa fa-lg fa-sign-in"></span></a></li>
+                {{/if}}
             </ul>
         </div>
     </div>

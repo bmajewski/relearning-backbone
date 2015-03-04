@@ -5,6 +5,7 @@ define(function (require) {
     var Backbone = require('backbone');
     var PageView = require('page/pageView');
     var globals = require('globals');
+    var app = require('app');
 
 
     return Backbone.Router.extend({
@@ -23,9 +24,7 @@ define(function (require) {
         },
 
         logout: function() {
-            window.localStorage.removeItem(globals.auth.TOKEN_KEY);
-            window.localStorage.removeItem(globals.auth.USER_KEY);
-            this.home();
+           mediator.trigger('app:logout');
         },
 
         login: function() {
@@ -37,12 +36,17 @@ define(function (require) {
 
         users: function() {
             console.log('routing - users');
-            require(['users/collection', 'users/listView'], function(Collection, View) {
-                var collection = new Collection();
-                collection.fetch().done(function(){
-                    mediator.trigger('page:displayView', new View({collection: collection}));
+            if (app.isAuthenticated()) {
+                require(['users/collection', 'users/listView'], function (Collection, View) {
+                    var collection = new Collection();
+                    collection.fetch().done(function () {
+                        mediator.trigger('page:displayView', new View({collection: collection}));
+                    });
                 });
-            });
+            } else {
+                console.log('unauthenticated - redirecting to login');
+                this.login();
+            }
         },
 
         home: function () {

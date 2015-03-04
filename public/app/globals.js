@@ -8,7 +8,8 @@ define(function (require) {
             USER_KEY: 'userId'
         },
         urls: {
-            AUTHENTICATE: '/api/authenticate'
+            AUTHENTICATE: '/api/authenticate',
+            APP_INFO: '/api/applicationInfo'
         }
     }
 

@@ -43,6 +43,10 @@ module.exports = function (app, express) {
         res.json({message: 'api is loaded'});
     });
 
+    userRouter.get('/applicationInfo', function(req,res){
+        res.json({version: '1.0-apple', build: 'local'});
+    });
+
     userRouter.use(function (req, res, next) {
         var token = req.body.token || req.params.token || req.headers['x-access-token'];
         if (token) {
