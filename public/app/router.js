@@ -4,6 +4,7 @@ define(function (require) {
     var mediator = require('mediator');
     var Backbone = require('backbone');
     var PageView = require('page/pageView');
+    var globals = require('globals');
 
 
     return Backbone.Router.extend({
@@ -16,7 +17,22 @@ define(function (require) {
         routes: {
             '': 'home',
             'home': 'home',
-            'users': 'users'
+            'users': 'users',
+            'login': 'login',
+            'logout': 'logout'
+        },
+
+        logout: function() {
+            window.localStorage.removeItem(globals.auth.TOKEN_KEY);
+            window.localStorage.removeItem(globals.auth.USER_KEY);
+            this.home();
+        },
+
+        login: function() {
+            console.log('routing - login');
+            require(['login/view'], function(View){
+                mediator.trigger('page:displayView', new View());
+            });
         },
 
         users: function() {

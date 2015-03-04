@@ -1,5 +1,6 @@
 define(function (require) {
 
+    var globals = require('globals');
     var Router = require('router');
     var mediator = require('mediator');
 
@@ -33,6 +34,19 @@ define(function (require) {
             this.$el.empty();
         }
     });
+
+    $.ajaxSetup({
+        statusCode: {
+            401: function (context) {
+                mediator.trigger('router:navigate', {route: 'login', options: {trigger: true}});
+            }
+        },
+        beforeSend: function (xhr) {
+            var token = window.localStorage.getItem(globals.auth.TOKEN_KEY);
+            xhr.setRequestHeader('x-access-token', token);
+        }
+    });
+
 
 
     var router = new Router();
