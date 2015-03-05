@@ -34,9 +34,7 @@ define(function (require) {
                 data: formValues,
                 success: function(response){
                     if (response.success){
-                        window.localStorage.setItem(globals.auth.TOKEN_KEY, response.token);
-                        window.localStorage.setItem(globals.auth.USER_KEY, response._id);
-                        mediator.trigger('router:navigate', {route:'home', options: {trigger: true}});
+                        mediator.trigger('app:authenticated', response);
                     } else {
                         self.$('.alert-warning').text(response.message).show();
                     }

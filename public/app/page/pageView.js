@@ -6,6 +6,7 @@ define(function (require) {
     var template = require('hbs!page/pageTemplate');
     var HeaderView = require('page/headerView');
 
+    var app = require('app');
 
     return Backbone.View.extend({
         el: '#page',
@@ -16,10 +17,17 @@ define(function (require) {
         },
 
         render: function () {
-            this.$el.html(template());
-            this.headerView = new HeaderView();
-            this.headerView.render();
-            return this;
+            var self = this;
+            // Gets nonauthenticated application info
+            app.initialize().done(function () {
+                // Ensure user is loaded if authenticated or blank user if not
+                app.initializeUser().done(function () {
+                    self.$el.html(template());
+                    self.headerView = new HeaderView({model: app.getUser()});
+                    self.headerView.render();
+                    return self;
+                });
+            });
         },
 
         bindPageEvents: function () {
