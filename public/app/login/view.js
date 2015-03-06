@@ -26,7 +26,6 @@ define(function (require) {
                 password: this.$('#password').val()
             };
             this.$('.alert').hide();
-            console.log('login with ', formValues);
             $.ajax({
                 url: globals.urls.AUTHENTICATE,
                 type: 'POST',
