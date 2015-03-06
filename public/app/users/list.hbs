@@ -17,7 +17,7 @@
             <td>
                 <div class="pull-right">
                     <button data-id="{{_id}}" class="btn btn-danger btn-sm js-deleteUser">Delete</button>
-                    <button data-id="{{_id}}" class="btn btn-success btn-sm js-editUser">Edit</button>
+                    {{#if ../admin}}<button data-id="{{_id}}" class="btn btn-success btn-sm js-editUser">Edit</button>{{/if}}
                 </div>
             </td>
         </tr>

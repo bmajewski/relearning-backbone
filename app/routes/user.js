@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
+var _ = require('underscore');
 
 var superSecret = 'TheAmazingKreskin';
 
@@ -23,7 +24,8 @@ module.exports = function (app, express) {
                     var token = jwt.sign({
                         name: user.name,
                         email: user.email,
-                        _id: user._id
+                        _id: user._id,
+                        permissions: user.permissions
                     }, superSecret, {
                         expiresInMinutes: 1440
                     });
@@ -116,10 +118,14 @@ module.exports = function (app, express) {
             });
         })
         .delete(function (req, res) {
-            User.remove({_id: req.params.user_id}, function (err, user) {
-                if (err) res.send(err);
-                res.json({});
-            })
+            if (_.contains(req.decoded.permissions, 'admin')){
+                User.remove({_id: req.params.user_id}, function (err, user) {
+                    if (err) res.send(err);
+                    res.json({});
+                })
+            } else {
+                return res.status(403).send({success: false, message: 'User is not authorized to delete users'});
+            }
         });
 
     return userRouter;

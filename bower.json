@@ -26,7 +26,8 @@
     "datatables": "~1.10.5",
     "datatables-bootstrap3-plugin": "~0.3.0",
     "backbone.bootstrap-modal": "~0.9.0",
-    "backbone.stickit": "~0.8.0"
+    "backbone.stickit": "~0.8.0",
+    "toastr": "~2.1.0"
   },
   "resolutions": {
     "jquery": ">= 1.9.1"

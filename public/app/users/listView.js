@@ -4,6 +4,7 @@ define(function (require) {
     var Backbone = require('backbone');
     var mediator = require('mediator');
     var template = require('hbs!users/list');
+    var app = require('app');
 
     var SingleView = require('users/singleView');
     require('bootstrap-modal');
@@ -24,7 +25,7 @@ define(function (require) {
         },
 
         render: function () {
-            this.$el.html(template({users: this.collection.toJSON()}));
+            this.$el.html(template({users: this.collection.toJSON(), admin: app.getPermissions().isAdmin() }));
             this.$('table').DataTable({
                 "aoColumns": [
                     null,
@@ -46,8 +47,8 @@ define(function (require) {
         deleteUser: function(e){
             var self = this;
             var id = $(e.currentTarget).attr('data-id');
-            var user = this.collection.get(id)
-            user.destroy().done(function(){
+            var user = this.collection.get(id);
+            user.destroy({wait: true}).done(function(){
                 self.collection.remove(user);
                 self.render();
             });

@@ -3,6 +3,7 @@ define(function (require) {
     var globals = require('globals');
     var Router = require('router');
     var mediator = require('mediator');
+    var toastr = require('toastr');
 
     _.extend(Backbone.View.prototype, {
         // Handle cleanup of view.
@@ -39,6 +40,29 @@ define(function (require) {
         statusCode: {
             401: function (context) {
                 mediator.trigger('router:navigate', {route: 'login', options: {trigger: true}});
+            },
+
+            403: function(context){
+                console.log('message', context.responseJSON.message);
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+
+                toastr["error"](context.responseJSON.message);
             }
         },
         beforeSend: function (xhr) {

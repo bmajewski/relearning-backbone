@@ -12,7 +12,8 @@ requirejs.config({
         "datatables-bootstrap3": "../components/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3",
         "bootstrap-modal": "../components/bootstrap/js/modal",
         "backbone.bootstrap-modal": "../components/backbone.bootstrap-modal/src/backbone.bootstrap-modal",
-        "stickit" : "../components/backbone.stickit/backbone.stickit"
+        "stickit" : "../components/backbone.stickit/backbone.stickit",
+        "toastr" : "../components/toastr/toastr"
     }
 });
 

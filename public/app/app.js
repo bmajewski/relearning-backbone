@@ -4,6 +4,7 @@ define(function (require) {
 
     var globals = require('globals');
     var mediator = require('mediator');
+    var Permissions = require('permissions');
 
     function _authenticated(response) {
         window.localStorage.setItem(globals.auth.TOKEN_KEY, response.token);
@@ -30,6 +31,7 @@ define(function (require) {
     var User = require('users/model');
     var _user;
     var _applicationInfo;
+    var _permissions;
 
     function _initialize() {
         var d = $.Deferred();
@@ -53,6 +55,7 @@ define(function (require) {
             _user = new User({_id: window.localStorage.getItem(globals.auth.USER_KEY)});
             _user.fetch().success(function () {
                 mediator.trigger('page:updateUserInfo');
+                _permissions = new Permissions(_user.get('permissions'));
                 d.resolve();
             });
         } else {
@@ -69,11 +72,15 @@ define(function (require) {
         return _user || new User();
     }
 
+    function _getPermissions() {
+        return _permissions;
+    }
     return {
         isAuthenticated: _isAuthenticated,
         initialize: _initialize,
         initializeUser: _initializeUser,
         getApplicationInfo: _getApplicationInfo,
-        getUser: _getUser
+        getUser: _getUser,
+        getPermissions: _getPermissions
     }
 });
